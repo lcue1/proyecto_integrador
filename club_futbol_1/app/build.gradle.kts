@@ -1,5 +1,5 @@
 plugins {
-    id("com.google.gms.google-services")
+    id("com.google.gms.google-services")//firebase
 
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,6 +7,10 @@ plugins {
 }
 
 android {
+
+    buildFeatures{
+        viewBinding = true
+    }
     namespace = "com.example.club_futbol_1"
     compileSdk = 35
 
@@ -52,5 +56,8 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    //necesaria para que el usuario pueda registrarse
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 
 }

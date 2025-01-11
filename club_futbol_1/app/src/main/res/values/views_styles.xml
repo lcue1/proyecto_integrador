@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="normalText">24sp</dimen>
+    <dimen name="subtituloTexto">28sp</dimen>
+    <!-- texto -->
+    <style name="normalText">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/normalText</item>
+    </style>
+    <style name="subtitulo" parent="normalText">
+        <item name="android:textSize">@dimen/subtituloTexto</item>
+    </style>
+
+</resources>

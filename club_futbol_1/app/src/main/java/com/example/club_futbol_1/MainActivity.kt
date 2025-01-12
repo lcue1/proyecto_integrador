@@ -8,12 +8,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.club_futbol_1.databinding.ActivityMainBinding
+import com.example.club_futbol_1.model.Usuario
+import com.example.club_futbol_1.ui.UserActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 class MainActivity : AppCompatActivity() {
@@ -39,20 +42,32 @@ class MainActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {//usuario registrado
                         //    currentUser.displayName
+                        abrirActividadUsuario(currentUser)
 
                     } else {// Usuario no válido (probablemente eliminado)
                         //registrarUsuario()
-                        binding.metodosDeRegistro.visibility=View.VISIBLE
+                        binding.contenedorRegistrarse.visibility=View.VISIBLE
 
                     }
                 }
         } else {//usuario no logeado null
-            binding.metodosDeRegistro.visibility=View.VISIBLE
+            binding.contenedorRegistrarse.visibility=View.VISIBLE
             binding.btnRegistrarseGoogle.setOnClickListener {
                 registrarUsuario()
             }
         }
 
+    }
+
+    private fun abrirActividadUsuario(currentUser: FirebaseUser) {
+        val intent = Intent(this,UserActivity::class.java)
+        var usuario = Usuario(
+            id = currentUser.uid,
+            nombre = currentUser.displayName,
+            urlImagen = currentUser.photoUrl.toString()
+        )
+        intent.putExtra("usuario",usuario)
+        startActivity(intent)
     }
 
     private fun registrarUsuario() {
@@ -61,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             .requestEmail()
             .build()
         var googleSignInClient = GoogleSignIn.getClient(this, configuracion)
-        googleSignInClient.signOut().addOnCompleteListener {
+        googleSignInClient.signOut().addOnCompleteListener {//Permite mostrar las cuentas con que el usuario puede acceder
             val signInIntent = googleSignInClient.signInIntent
             signInLauncher.launch(signInIntent)
         }
@@ -74,6 +89,8 @@ class MainActivity : AppCompatActivity() {
             val data: Intent? = result.data
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
+            Log.d("login","ok")
+
         }else{//no cambia de actividad
             Log.d("login","canceled")
         }
@@ -81,7 +98,6 @@ class MainActivity : AppCompatActivity() {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         try {//hubo problemas con el login
             val account = task.getResult(ApiException::class.java)!!
-            Log.d("SignInActivity", "firebaseAuthWithGoogle:" + account.id)
            firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
             Log.w("SignInActivity", "Google sign in failed", e)
@@ -94,8 +110,8 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign-in exitoso
-                    val user = auth.currentUser
-                    Log.d("login","loged")
+                    auth.currentUser
+                    abrirActividadUsuario(auth.currentUser!!)
                 } else {
                     // Error en la autenticación
                     Log.w("login", "signInWithCredential:failure", task.exception)

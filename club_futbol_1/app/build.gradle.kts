@@ -60,4 +60,6 @@ dependencies {
     //necesaria para que el usuario pueda registrarse
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
+    //Cargar imagenes desde URL uso de picaso
+    implementation("com.squareup.picasso:picasso:2.71828")
 }

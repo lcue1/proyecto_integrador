@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.ActivityUserBinding
 import com.example.club_futbol_1.model.Usuario
+import com.squareup.picasso.Picasso
 
 class UserActivity : AppCompatActivity() {
     //atributos
@@ -26,8 +27,10 @@ class UserActivity : AppCompatActivity() {
     private fun cargarInterfazDeUsuario() {
         if(intentUsuario!=null){
             binding.nombreUsuario.text = intentUsuario!!.nombre
+            Picasso.get()
+                .load(intentUsuario!!.urlImagen)
+                .into(binding.imagenUsuario)
 
-            //falta cargar informacion
         }
     }
 

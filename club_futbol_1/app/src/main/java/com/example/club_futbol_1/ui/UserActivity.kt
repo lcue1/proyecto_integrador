@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.ActivityUserBinding
 import com.example.club_futbol_1.model.Usuario
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
 class UserActivity : AppCompatActivity() {
@@ -31,7 +32,29 @@ class UserActivity : AppCompatActivity() {
                 .load(intentUsuario!!.urlImagen)
                 .into(binding.imagenUsuario)
 
+            cargarNoticias()
         }
+    }
+
+    private fun cargarNoticias() {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("noticias")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    // Accede a los datos del documento
+                    val titulo = document.getString("titulo")  // Campo "titulo"
+                    val descripcion = document.getString("descripcion")  // Campo "titulo"
+                    val utlImg = document.getString("urlImg")  // Campo "titulo"
+
+                    // Aquí puedes usar los datos (mostrar en un RecyclerView, por ejemplo)
+                    Log.d("Firestore", "Título: $titulo, Contenido: $descripcion,")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Firestore", "Error al obtener documentos.", exception)
+            }
     }
 
     private fun iniciarAtributos() {

@@ -1,0 +1,27 @@
+package com.example.club_futbol_1.utils
+
+import android.content.Context
+import androidx.appcompat.app.AlertDialog
+
+ fun mostrarDialogoConfirmacion(
+    contest:Context,
+    titulo:String, descripcion:String,
+    accionAfirmativa:()->Unit,
+    accionNegativa:()->Unit
+) {
+    val builder: AlertDialog.Builder = AlertDialog.Builder(contest)
+    builder
+        .setMessage(descripcion)
+        .setTitle(titulo)
+        .setPositiveButton("Si") { dialog, which ->
+            accionAfirmativa()
+        }
+        .setNegativeButton("No") { dialog, which ->
+            accionNegativa()
+        }
+
+    val dialog: AlertDialog = builder.create()
+    dialog.show()
+
+
+}

@@ -36,13 +36,14 @@
 
         <!-- ImageButton alineado a la derecha -->
         <ImageButton
-            android:id="@+id/botonAccion"
+            android:id="@+id/botonSalir"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/degradado_main_activity"
+            android:src="@drawable/boton_salir"
             android:background="@null"
-            android:contentDescription="Botón de acción" />
+            android:layout_marginEnd="32dp"
+            android:contentDescription="Botón salir" />
     </RelativeLayout>
 
 

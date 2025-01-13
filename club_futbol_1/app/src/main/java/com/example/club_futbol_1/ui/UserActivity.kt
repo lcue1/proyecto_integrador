@@ -3,12 +3,14 @@ package com.example.club_futbol_1.ui
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.ActivityUserBinding
 import com.example.club_futbol_1.model.Usuario
+import com.example.club_futbol_1.utils.mostrarDialogoConfirmacion
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
@@ -23,7 +25,9 @@ class UserActivity : AppCompatActivity() {
 
         iniciarAtributos()
         cargarInterfazDeUsuario()
+        eventosBotones()
     }
+
 
     private fun cargarInterfazDeUsuario() {
         if(intentUsuario!=null){
@@ -64,4 +68,22 @@ class UserActivity : AppCompatActivity() {
         intentUsuario = intent.getParcelableExtra<Usuario>("usuario")
         Log.d("usuario",intentUsuario.toString())
     }
+
+
+    //eventos
+    private fun eventosBotones() {
+        binding.botonSalir.setOnClickListener {
+            //Abre dialog y pregunta al usuario si desea salir
+            mostrarDialogoConfirmacion(this,
+                "Salir","Desea salir de la app?",
+                {
+                    finishAffinity()
+                    System.out.close()
+                },
+                {}
+            )
+        }
+
+    }
+
 }

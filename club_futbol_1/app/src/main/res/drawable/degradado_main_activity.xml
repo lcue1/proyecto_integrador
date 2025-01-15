@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Definir el borde y el fondo -->
+    <solid android:color="#FF5733" /> <!-- Color de fondo llamativo -->
+    <corners android:radius="16dp" /> <!-- Bordes redondeados -->
 
-<shape
-    android:shape = "rectangle"
-    xmlns:android = "http://schemas.android.com/apk/res/android" >
+    <!-- Borde de la forma -->
+    <stroke
+        android:color="#FF4500"
+        android:width="4dp" /> <!-- Borde más grueso para darle más énfasis -->
 
+    <!-- Gradiente en el fondo con efectos -->
     <gradient
-        android:startColor = "#F40303"
-        android:centerColor = "#000000"
-        android:endColor = "#F40303"
-        android:angle = "60"
-        android:type = "sweep" />
+        android:startColor="#FF5733"
+        android:centerColor="#FFFFFF"
+        android:endColor="#330202"
+        android:angle="45"
+        android:type="linear" /> <!-- Un gradiente lineal con diferentes tonos de rojo -->
+
+    <!-- Sombra (si lo deseas) -->
+    <padding
+        android:left="8dp"
+        android:top="8dp"
+        android:right="8dp"
+        android:bottom="8dp" /> <!-- Agrega un padding para mayor efecto visual -->
 </shape>

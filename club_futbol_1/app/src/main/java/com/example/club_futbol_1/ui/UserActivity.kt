@@ -7,9 +7,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.ActivityUserBinding
+import com.example.club_futbol_1.model.Noticia
 import com.example.club_futbol_1.model.Usuario
+import com.example.club_futbol_1.ui.adapters.NoticiasAdapter
 import com.example.club_futbol_1.utils.mostrarDialogoConfirmacion
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
@@ -46,15 +50,27 @@ class UserActivity : AppCompatActivity() {
         db.collection("noticias")
             .get()
             .addOnSuccessListener { result ->
+                val noticias= mutableListOf<Noticia>()
                 for (document in result) {
                     // Accede a los datos del documento
-                    val titulo = document.getString("titulo")  // Campo "titulo"
-                    val descripcion = document.getString("descripcion")  // Campo "titulo"
-                    val utlImg = document.getString("urlImg")  // Campo "titulo"
+                    val titulo = document.getString("titulo")  // Campo
+                    val descripcion = document.getString("descripcion")  // "
+                    val utlImg = document.getString("urlImg")  // C
+                    Log.d("imagen",utlImg.toString())
 
-                    // Aquí puedes usar los datos (mostrar en un RecyclerView, por ejemplo)
-                    Log.d("Firestore", "Título: $titulo, Contenido: $descripcion,")
+                    noticias.add(Noticia(
+                        id = "1",
+                        titulo = titulo,
+                        descripcion=descripcion,
+                        urlImagen = utlImg
+                    ))
                 }
+                Log.d("noticias",noticias.toString())
+                val customAdapter = NoticiasAdapter(noticias)
+
+                val recyclerView: RecyclerView = findViewById(R.id.noticiass_recycle)
+                recyclerView.layoutManager = LinearLayoutManager(this)
+                recyclerView.adapter = customAdapter
             }
             .addOnFailureListener { exception ->
                 Log.w("Firestore", "Error al obtener documentos.", exception)

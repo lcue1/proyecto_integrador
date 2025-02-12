@@ -13,8 +13,8 @@
     <!-- Gradiente en el fondo con efectos -->
     <gradient
         android:startColor="#FF5733"
-        android:centerColor="#FFFFFF"
-        android:endColor="#330202"
+        android:centerColor="#330202"
+        android:endColor="#FF5733"
         android:angle="45"
         android:type="linear" /> <!-- Un gradiente lineal con diferentes tonos de rojo -->
 

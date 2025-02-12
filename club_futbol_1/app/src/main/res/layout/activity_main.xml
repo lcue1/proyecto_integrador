@@ -32,19 +32,14 @@
             android:layout_marginTop="32dp"
             style="@style/subtitulo"
             />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
->
             <ImageButton
                 android:id="@+id/btnRegistrarseGoogle"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/googleg_standard_color_18"
-
+                android:layout_width="wrap_content"
+                android:background="#FFFFFF"
+                android:layout_height="wrap_content"
+                android:src="@drawable/btn_google_sesion"
+                android:layout_marginTop="48dp"
                 />
 
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

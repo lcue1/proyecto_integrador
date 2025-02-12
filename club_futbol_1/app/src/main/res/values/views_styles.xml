@@ -2,13 +2,14 @@
 <resources>
     <dimen name="normalText">16dp</dimen>
     <dimen name="subtituloTexto">18dp</dimen>
+    <dimen name="titulo">32sp</dimen>
     <!-- texto -->
     <style name="normalText">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/normalText</item>
     </style>
     <style name="subtitulo" parent="normalText">
-        <item name="android:textSize">@dimen/subtituloTexto</item>
+        <item name="android:textSize">@dimen/titulo</item>
     </style>
 
 </resources>

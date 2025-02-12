@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Definir el borde y el fondo -->
-    <solid android:color="#FF5733" /> <!-- Color de fondo llamativo -->
-    <corners android:radius="16dp" /> <!-- Bordes redondeados -->
-
-    <!-- Borde de la forma -->
-    <stroke
-        android:color="#FF4500"
-        android:width="4dp" /> <!-- Borde más grueso para darle más énfasis -->
 
     <!-- Gradiente en el fondo con efectos -->
     <gradient

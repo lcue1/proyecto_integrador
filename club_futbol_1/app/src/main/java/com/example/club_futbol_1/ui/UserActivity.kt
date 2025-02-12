@@ -90,13 +90,15 @@ class UserActivity : AppCompatActivity() {
     private fun eventosBotones() {
         binding.botonSalir.setOnClickListener {
             //Abre dialog y pregunta al usuario si desea salir
-            mostrarDialogoConfirmacion(this,
-                "Salir","Desea salir de la app?",
-                {
+            mostrarDialogoConfirmacion(
+                contest = this,
+                titulo="Salir",
+                descripcion = "Desea salir de la app?",
+                accionAfirmativa = {
                     finishAffinity()
                     System.out.close()
                 },
-                {}
+               accionNegativa =  {}
             )
         }
 

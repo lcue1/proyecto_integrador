@@ -3,7 +3,8 @@ plugins {
 
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
+    //navigation
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -50,6 +51,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -63,4 +66,22 @@ dependencies {
 
     //Cargar imagenes desde URL uso de picaso
     implementation("com.squareup.picasso:picasso:2.71828")
+
+
+    //navigation fragments
+    val nav_version = "2.8.6"
+
+
+    // Views/Fragments integration
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Feature module support for Fragments
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    // JSON serialization library, works with the Kotlin serialization plugin
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 }

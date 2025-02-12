@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.club_futbol_1.R
@@ -17,22 +18,45 @@ import com.example.club_futbol_1.ui.adapters.NoticiasAdapter
 import com.example.club_futbol_1.utils.mostrarDialogoConfirmacion
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-
 class UserActivity : AppCompatActivity() {
-    //atributos
     private lateinit var binding: ActivityUserBinding
-    private  var intentUsuario: Usuario? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_user)
-
-        iniciarAtributos()
-        cargarInterfazDeUsuario()
-        eventosBotones()
+        iniciarAtributos() // ✅ Primero inicializa el binding correctamente
+        clickListeners()   // ✅ Luego asigna los listeners
     }
 
+    private fun iniciarAtributos() {
+        binding = ActivityUserBinding.inflate(layoutInflater)
+        setContentView(binding.root) // ✅ Asigna la vista correctamente
+    }
 
+    private fun clickListeners() {
+        binding.noticias.setOnClickListener { cargarFragmento() }
+    }
+
+    private fun cargarFragmento() {
+        Log.d("cargar", "cargarFragmento")
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+
+        if (navHostFragment != null) {
+            val navController = navHostFragment.navController
+            val navGraph = navController.navInflater.inflate(R.navigation.navegacion_usuario_graph)
+
+            val bundle = Bundle().apply {
+                putString("userName", "userName")
+            }
+            navGraph.setStartDestination(R.id.infoUssuarioFragment)
+            navController.setGraph(navGraph, bundle)
+        } else {
+            Log.e("FragmentError", "navHostFragment es nulo")
+        }
+    }
+/*
     private fun cargarInterfazDeUsuario() {
         if(intentUsuario!=null){
             binding.nombreUsuario.text = intentUsuario!!.nombre
@@ -77,16 +101,9 @@ class UserActivity : AppCompatActivity() {
             }
     }
 
-    private fun iniciarAtributos() {
-        binding=ActivityUserBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        intentUsuario = intent.getParcelableExtra<Usuario>("usuario")
-        Log.d("usuario",intentUsuario.toString())
-    }
 
 
-    //eventos
+    //eventosx1
     private fun eventosBotones() {
         binding.botonSalir.setOnClickListener {
             //Abre dialog y pregunta al usuario si desea salir
@@ -103,5 +120,5 @@ class UserActivity : AppCompatActivity() {
         }
 
     }
-
+*/
 }

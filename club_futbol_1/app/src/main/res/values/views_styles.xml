@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="normalText">16dp</dimen>
-    <dimen name="subtituloTexto">18dp</dimen>
-    <dimen name="titulo">32sp</dimen>
+    <dimen name="normalText">22sp</dimen>
+    <dimen name="subtituloTexto">26sp</dimen>
+    <dimen name="titulo">22sp</dimen>
     <!-- texto -->
     <style name="normalText">
         <item name="android:textColor">@color/white</item>

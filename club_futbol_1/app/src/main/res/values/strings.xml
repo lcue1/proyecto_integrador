@@ -2,7 +2,8 @@
     <string name="app_name">club_futbol_1</string>
 
 
+    <!--Fragmenot usuaruario -->
+    <string name="tituloFrgmrnyoUsuario">Perfil</string>
+    <string name="btnSalir">Salir</string>
 
-<!--Fragmenot usuaruario -->
-    <string name="tituloFrgmrnyoUsuario">Usuario</string>
 </resources>

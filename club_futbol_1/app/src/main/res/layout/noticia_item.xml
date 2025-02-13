@@ -3,7 +3,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="256dp"
+    android:layout_height="300dp"
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="32dp">
 
@@ -15,11 +15,13 @@
             android:id="@+id/imagenNoticia"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:scaleType="centerCrop" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tituloNoticia"
@@ -36,17 +38,18 @@
         <TextView
             android:id="@+id/descripcionNoticia"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Descripción"
+            android:layout_height="124dp"
+            android:text="Descripcion"
             android:background="#AA000000"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:padding="8dp"
-            android:height="98dp"
             app:layout_constraintBottom_toBottomOf="parent"
+
             />
 
         <Button
+            android:id="@+id/VerNoticiaBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ver..."

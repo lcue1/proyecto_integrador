@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 
  fun mostrarDialogoConfirmacion(
-    contest:Context,
-    titulo:String, descripcion:String,
-    accionAfirmativa:()->Unit,
-    accionNegativa:()->Unit
+     contest:Context,
+     titulo:String, descripcion:String,
+     accionAfirmativa:()->Unit,
+     accionNegativa: (() -> Unit)? =null
 ) {
     val builder: AlertDialog.Builder = AlertDialog.Builder(contest)
     builder
@@ -17,7 +17,9 @@ import androidx.appcompat.app.AlertDialog
             accionAfirmativa()
         }
         .setNegativeButton("No") { dialog, which ->
-            accionNegativa()
+            if (accionNegativa != null) {
+                accionNegativa()
+            }
         }
 
     val dialog: AlertDialog = builder.create()

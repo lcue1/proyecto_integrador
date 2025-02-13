@@ -10,4 +10,9 @@
         android:name="com.example.club_futbol_1.ui.fragments.InfoUssuarioFragment"
         android:label="fragment_info_ussuario"
         tools:layout="@layout/fragment_info_ussuario" />
+    <fragment
+        android:id="@+id/noticiasEquipoFragment"
+        android:name="com.example.club_futbol_1.ui.fragments.NoticiasEquipoFragment"
+        android:label="fragment_noticias_equipo"
+        tools:layout="@layout/fragment_noticias_equipo" />
 </navigation>

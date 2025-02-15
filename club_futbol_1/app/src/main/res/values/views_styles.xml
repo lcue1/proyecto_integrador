@@ -27,4 +27,15 @@
         <item name="itemTextAppearance">@style/NavigationDrawerItemText</item>
         <item name="android:paddingTop">32dp</item>
     </style>
+
+
+    <!-- Item tienda cardview-->
+    <style name="precio_producto" parent="normalText">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:fontFamily">casual </item>
+        <item name="android:background">#AA000000 </item>
+        <item name="android:padding">8dp </item>
+
+    </style>
 </resources>

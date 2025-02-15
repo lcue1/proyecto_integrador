@@ -19,7 +19,6 @@ import com.example.club_futbol_1.databinding.ActivityUserBinding
 import com.example.club_futbol_1.model.Noticia
 import com.example.club_futbol_1.model.Usuario
 import com.example.club_futbol_1.ui.adapters.NoticiasAdapter
-import com.example.club_futbol_1.utils.mostrarDialogoConfirmacion
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
@@ -37,7 +36,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
          usuario = intent.getParcelableExtra<Usuario>("usuario")
         usuario?.let {
-            cargarFragmento(R.id.noticiasEquipoFragment)
+            cargarFragmento(R.id.tiendaFragment)
             seleccionarFragmentoMenu()
 
         }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import com.example.club_futbol_1.databinding.FragmentInfoUssuarioBinding
 import com.example.club_futbol_1.model.Usuario
-import com.example.club_futbol_1.utils.mostrarDialogoConfirmacion
+import com.example.club_futbol_1.utils.Dialogos
 import com.squareup.picasso.Picasso
 
 
@@ -43,7 +43,7 @@ class InfoUssuarioFragment : Fragment() {
     }
 
     private fun clickListener() {
-        binding.salitBtn.setOnClickListener { mostrarDialogoConfirmacion(
+        binding.salitBtn.setOnClickListener { Dialogos.mostrarDialogoConfirmacion(
             contest = requireContext(),
             titulo = "Salir",
             descripcion = "QUieres salir ?",
@@ -66,8 +66,4 @@ class InfoUssuarioFragment : Fragment() {
     }
 
 
-/*
-
-
-*/
 }

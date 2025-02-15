@@ -64,6 +64,9 @@ class UserActivity : AppCompatActivity() {
                 R.id.nav_perfil -> {
                     cargarFragmento(R.id.infoUssuarioFragment)
                 }
+                R.id.nav_tienda -> {
+                    cargarFragmento(R.id.tiendaFragment)
+                }
 
             }
             drawerLayout.closeDrawer(GravityCompat.START) // Cierra el menú después de seleccionar
@@ -86,25 +89,5 @@ class UserActivity : AppCompatActivity() {
         navController.setGraph(navGraph, bundle) // Configura el gráfico
 
     }
-/*
 
-
-    //eventosx1
-    private fun eventosBotones() {
-        binding.botonSalir.setOnClickListener {
-            //Abre dialog y pregunta al usuario si desea salir
-            mostrarDialogoConfirmacion(
-                contest = this,
-                titulo="Salir",
-                descripcion = "Desea salir de la app?",
-                accionAfirmativa = {
-                    finishAffinity()
-                    System.out.close()
-                },
-               accionNegativa =  {}
-            )
-        }
-
-    }
-*/
 }

@@ -12,6 +12,11 @@
         android:icon="@drawable/ic_noticias"
         android:title="Noticias"/>
     <item
+        android:id="@+id/nav_tienda"
+        android:icon="@drawable/ic_profile"
+        android:title="Tienda"
+        />
+    <item
         android:id="@+id/nav_perfil"
         android:icon="@drawable/ic_profile"
         android:title="Perfil"

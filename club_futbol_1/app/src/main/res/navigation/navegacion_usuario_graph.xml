@@ -15,4 +15,9 @@
         android:name="com.example.club_futbol_1.ui.fragments.NoticiasEquipoFragment"
         android:label="fragment_noticias_equipo"
         tools:layout="@layout/fragment_noticias_equipo" />
+    <fragment
+        android:id="@+id/tiendaFragment"
+        android:name="com.example.club_futbol_1.ui.fragments.TiendaFragment"
+        android:label="fragment_tienda"
+        tools:layout="@layout/fragment_tienda" />
 </navigation>

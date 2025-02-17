@@ -36,7 +36,7 @@ class UserActivity : AppCompatActivity() {
         setContentView(binding.root)
          usuario = intent.getParcelableExtra<Usuario>("usuario")
         usuario?.let {
-            cargarFragmento(R.id.tiendaFragment)
+         //   cargarFragmento(R.id.tiendaFragment)
             seleccionarFragmentoMenu()
 
         }

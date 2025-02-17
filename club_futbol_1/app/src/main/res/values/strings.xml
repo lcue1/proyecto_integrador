@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">club_futbol_1</string>
 
+    
+    <!-- Main activity -->
+    <string name="tituloMainActivity">Registrarse</string>
+    <string name="descriptionLogoMainActivity">Logo equipo</string>
+    <string name="descriptionBotonLoginGoogle">Boton login google</string>
 
     <!--Fragmenot usuaruario -->
     <string name="tituloFrgmrnyoUsuario">Perfil</string>

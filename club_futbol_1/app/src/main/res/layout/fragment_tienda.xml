@@ -16,7 +16,7 @@
         >
 
         <TextView
-            android:id="@+id/tituloNoticia"
+            android:id="@+id/tituloTienda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tienda"
@@ -25,12 +25,23 @@
             app:layout_constraintTop_toTopOf="parent"
 
             />
+        <Button
+            android:id="@+id/btn_items_carrito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver "
+            android:drawableLeft="@drawable/ic_carrito_compra"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/btn_productos_carrito"
+            android:visibility="gone"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/noticiasRecycle"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tituloNoticia"
+            app:layout_constraintTop_toBottomOf="@id/tituloTienda"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

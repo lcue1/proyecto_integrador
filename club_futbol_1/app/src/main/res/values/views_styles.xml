@@ -28,7 +28,11 @@
         <item name="android:paddingTop">32dp</item>
     </style>
 
-
+<!-- Tienda fragment -->
+    <style name="btn_productos_carrito" parent="normalText">
+    <item name="android:textSize">@dimen/titulo</item>
+    <item name="backgroundTint">@color/verde</item>
+    </style>
     <!-- Item tienda cardview-->
     <style name="precio_producto" parent="normalText">
         <item name="android:textSize">32sp</item>

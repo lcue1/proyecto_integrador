@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 
 class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCarrito:(producto:Producto)->Unit) :
     RecyclerView.Adapter<TiendaAdapter.ViewHolder>() {
-
+        private var cambiarIcono=false
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var id_producto:String
@@ -25,6 +25,7 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
         val imagen_producto: ImageView
         var url_img_producto: String
         val btn_carrito: ImageButton
+        var seleccionado:Boolean
 
         init {
             // Define click listener for the ViewHolder's View
@@ -35,6 +36,7 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
             imagen_producto = view.findViewById(R.id.imagen_producto)
             url_img_producto=""
             btn_carrito = view.findViewById(R.id.btn_carrito)
+            seleccionado=false
         }
     }
 
@@ -61,6 +63,8 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
             .into(viewHolder.imagen_producto)
         viewHolder.url_img_producto = productos[position].url_img_producto
         viewHolder.btn_carrito.setOnClickListener {
+
+            cammbiarIconoBtn(viewHolder)
             val precioSinSimboloDolar=viewHolder.precio.text.toString().dropLast(1)
             val prosucto =Producto(
                 id_document=viewHolder.id_producto,
@@ -71,6 +75,16 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
             )
             agregarAlCarrito(prosucto)
 
+        }
+    }
+
+    private fun cammbiarIconoBtn( viewHolder: ViewHolder) {
+        if (viewHolder.seleccionado){
+            viewHolder.btn_carrito.setImageResource(R.drawable.ic_carrito_compra)
+            viewHolder.seleccionado= !viewHolder.seleccionado
+        }else{
+            viewHolder.btn_carrito.setImageResource(R.drawable.ic_eliminar_cde_carrito)
+            viewHolder.seleccionado= !viewHolder.seleccionado
         }
     }
 

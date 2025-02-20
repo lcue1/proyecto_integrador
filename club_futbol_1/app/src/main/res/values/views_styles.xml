@@ -30,8 +30,8 @@
 
 <!-- Tienda fragment -->
     <style name="btn_productos_carrito" parent="normalText">
-    <item name="android:textSize">@dimen/titulo</item>
-    <item name="backgroundTint">@color/verde</item>
+        <item name="android:textSize">@dimen/titulo</item>
+        <item name="backgroundTint">@color/verde</item>
     </style>
     <!-- Item tienda cardview-->
     <style name="precio_producto" parent="normalText">
@@ -41,5 +41,13 @@
         <item name="android:background">#000000</item>
         <item name="android:padding">8dp </item>
 
+    </style>
+
+
+
+    <!-- Boton regresar -->
+    <style name="btn_regresar" parent="normalText">
+        <item name="android:textSize">@dimen/titulo</item>
+        <item name="backgroundTint">@color/black</item>
     </style>
 </resources>

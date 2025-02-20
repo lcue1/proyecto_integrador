@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class TiendaFragment : Fragment() {
     private val binding get()= _binding!!
     private val productosCarrito= mutableListOf<Producto>()
     private var nItemsCarrito=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,13 +41,17 @@ class TiendaFragment : Fragment() {
 
         _binding = FragmentTiendaBinding.inflate(inflater, container, false)
 
-        binding.btnItemsCarrito.setOnClickListener { abrirFragmentCarrito() }
+        binding.btnItemsCarrito.setOnClickListener { abrirFragmentCarrito() }//boton citems agregados al carrito
 
         return binding.root
     }
 
     private fun abrirFragmentCarrito() {
+        val bundle = Bundle().apply {
+            putParcelableArrayList("productosCarrito", ArrayList(productosCarrito))
+        }
 
+        findNavController().navigate(R.id.action_tiendaFragment_to_carrritoFragment, bundle)
     }
 
 
@@ -72,7 +78,7 @@ class TiendaFragment : Fragment() {
                 val customAdapter = TiendaAdapter(//creo adapter
                     productos = productos,//envio productos para que se muestren en el tienda item
                     agregarAlCarrito = {// agrega o elimina la lista del carrito
-                        productoSeleccionado->  atregarEliminarItemsCarrrito(productoSeleccionado)   }
+                        productoSeleccionado->  agregarEliminarCarrito(productoSeleccionado)   }
                 )
                 //vinculacion del adapter con el recyclerview
                 val recyclerView: RecyclerView = binding.noticiasRecycle
@@ -84,7 +90,7 @@ class TiendaFragment : Fragment() {
                 Log.w("Firestore", "Error al obtener documentos.", exception)
             }
     }
-    private fun atregarEliminarItemsCarrrito(productoSeleccionado:Producto){
+    private fun agregarEliminarCarrito(productoSeleccionado:Producto){
         val  existeItemCarrito = productosCarrito.find { it->it.id_document==productoSeleccionado.id_document }
         if(existeItemCarrito==null){//agrega una sola vez
             productosCarrito.add(productoSeleccionado)//agrega a la mutablelist

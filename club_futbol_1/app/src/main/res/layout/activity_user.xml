@@ -55,7 +55,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
-        android:background="@drawable/degradado_main_activity"
+        android:background="@color/black"
         style="@style/NavigationViewStyle"
         />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navegacion_usuario_graph"
-    app:startDestination="@id/tiendaFragment">
+    app:startDestination="@id/carrritoFragment">
 
     <fragment
         android:id="@+id/infoUssuarioFragment"
@@ -19,5 +19,18 @@
         android:id="@+id/tiendaFragment"
         android:name="com.example.club_futbol_1.ui.fragments.TiendaFragment"
         android:label="fragment_tienda"
-        tools:layout="@layout/fragment_tienda" />
+        tools:layout="@layout/fragment_tienda" >
+        <action
+            android:id="@+id/action_tiendaFragment_to_carrritoFragment"
+            app:destination="@id/carrritoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/carrritoFragment"
+        android:name="com.example.club_futbol_1.ui.fragments.CarrritoFragment"
+        android:label="fragment_carrrito"
+        tools:layout="@layout/fragment_carrrito" >
+        <action
+            android:id="@+id/action_carrritoFragment_to_tiendaFragment"
+            app:destination="@id/tiendaFragment" />
+    </fragment>
 </navigation>

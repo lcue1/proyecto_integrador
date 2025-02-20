@@ -37,7 +37,6 @@ class CarrritoFragment : Fragment() {
             findNavController().navigate(R.id.action_carrritoFragment_to_tiendaFragment,)
         }
 
-
         return binding.root
 
     }

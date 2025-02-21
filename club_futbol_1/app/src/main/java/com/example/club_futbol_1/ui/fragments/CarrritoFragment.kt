@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.FragmentCarrritoBinding
-import com.example.club_futbol_1.databinding.FragmentTiendaBinding
 import com.example.club_futbol_1.model.Producto
+import com.example.club_futbol_1.ui.adapters.CarritoAdapter
+import java.util.ArrayList
 
 
 class CarrritoFragment : Fragment() {
@@ -28,17 +31,45 @@ class CarrritoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val productosCarrito = arguments?.getParcelableArrayList<Producto>("productosCarrito")
+        val productosSeleccionados = arguments?.getParcelableArrayList<Producto>("productosCarrito")
 
-        Log.d("carritoconproductos",productosCarrito.toString())
         _binding = FragmentCarrritoBinding.inflate(inflater, container, false)
 
         binding.btnRegresar.setOnClickListener {
             findNavController().navigate(R.id.action_carrritoFragment_to_tiendaFragment,)
         }
+        productosSeleccionados?.let {
+
+            cargarProductosEnUI(productosSeleccionados)
+        }
 
         return binding.root
 
     }
+    private fun cargarProductosEnUI(productosSeleccionados: ArrayList<Producto>) {
+
+        // Calcular los valores iniciales (cantidad y precio total)
+        val cantidadProductos = productosSeleccionados.size // numero productos seleccionados
+        val precioTotal = productosSeleccionados.sumOf { it.precio_producto } // Total de los precios de todos los productos
+        establecerCantidades(cantidadProductos,precioTotal)// valores iniciales
+
+        val adaptador = CarritoAdapter(//carga adapter
+            producto_carrito = productosSeleccionados,
+            obtenerCantidadProductos = { cantidadProductos, precioTotal ->
+                establecerCantidades(cantidadProductos,precioTotal)//actualiza valores
+            }
+        )
+
+        val recyclerView: RecyclerView = binding.carritoRecycle
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = adaptador
+
+    }
+
+    private fun establecerCantidades(cantidadTotalProductos:Int, precioTotal:Double){
+        binding.cantidaProductos.text = "Cantidad de productos: "+cantidadTotalProductos.toString()
+        binding.precioTotalProductos.text =String.format("Total a pagar: %.2f",precioTotal)
+    }
+
 
 }

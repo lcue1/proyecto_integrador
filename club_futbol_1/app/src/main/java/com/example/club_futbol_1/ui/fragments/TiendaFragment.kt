@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class TiendaFragment : Fragment() {
     private var _binding:FragmentTiendaBinding?=null
     private val binding get()= _binding!!
-    private val productosCarrito= mutableListOf<Producto>()
+    private val productosSeleccionados= mutableListOf<Producto>()
     private var nItemsCarrito=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,7 @@ class TiendaFragment : Fragment() {
 
     private fun abrirFragmentCarrito() {
         val bundle = Bundle().apply {
-            putParcelableArrayList("productosCarrito", ArrayList(productosCarrito))
+            putParcelableArrayList("productosCarrito", ArrayList(productosSeleccionados))
         }
 
         findNavController().navigate(R.id.action_tiendaFragment_to_carrritoFragment, bundle)
@@ -91,25 +91,25 @@ class TiendaFragment : Fragment() {
             }
     }
     private fun agregarEliminarCarrito(productoSeleccionado:Producto){
-        val  existeItemCarrito = productosCarrito.find { it->it.id_document==productoSeleccionado.id_document }
+        val  existeItemCarrito = productosSeleccionados.find { it->it.id_document==productoSeleccionado.id_document }
         if(existeItemCarrito==null){//agrega una sola vez
-            productosCarrito.add(productoSeleccionado)//agrega a la mutablelist
+            productosSeleccionados.add(productoSeleccionado)//agrega a la mutablelist
             nItemsCarrito++//incrementa contador de tiems o productos
             binding.btnItemsCarrito.text="VVer "+nItemsCarrito.toString()//modifica boton items carrito
         }else{//elimina carrito
-            productosCarrito.remove(productoSeleccionado)
+            productosSeleccionados.remove(productoSeleccionado)
             nItemsCarrito--
             binding.btnItemsCarrito.text="VVer "+nItemsCarrito.toString()
 
         }
         onOFBtnCarrito()//muestra o oculta botn carrito
 
-        Log.d("productosCar",productosCarrito.toString())
+        Log.d("productosCar",productosSeleccionados.toString())
     }
 
 
     private fun onOFBtnCarrito(){
-        if (productosCarrito.isEmpty()) {//oculta boton carrito cuando la lista esta vacia
+        if (productosSeleccionados.isEmpty()) {//oculta boton carrito cuando la lista esta vacia
             binding.btnItemsCarrito.visibility = View.GONE
             return
         }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navegacion_usuario_graph"
-    app:startDestination="@id/carrritoFragment">
+    app:startDestination="@id/addNoticiaFragment">
 
     <fragment
         android:id="@+id/infoUssuarioFragment"
@@ -33,4 +33,9 @@
             android:id="@+id/action_carrritoFragment_to_tiendaFragment"
             app:destination="@id/tiendaFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addNoticiaFragment"
+        android:name="com.example.club_futbol_1.ui.fragments_admin.AddNoticiaFragment"
+        android:label="fragment_add_noticia"
+        tools:layout="@layout/fragment_add_noticia" />
 </navigation>

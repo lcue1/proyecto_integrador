@@ -66,6 +66,9 @@ class UserActivity : AppCompatActivity() {
                 R.id.nav_tienda -> {
                     cargarFragmento(R.id.tiendaFragment)
                 }
+                R.id.menu_add_noticia -> {
+                    cargarFragmento(R.id.addNoticiaFragment)
+                }
 
             }
             drawerLayout.closeDrawer(GravityCompat.START) // Cierra el menú después de seleccionar

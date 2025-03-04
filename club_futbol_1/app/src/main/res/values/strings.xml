@@ -15,7 +15,12 @@
     <!-- Fragmento carrito -->
     <string name="titulo_carrito">Tus productos</string>
     <string name="btn_regesar">Carrito</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+
+    <!-- Add noticias -->
+    <string name="titulo_agregar_noticia">Agregar noticia</string>
 
 </resources>

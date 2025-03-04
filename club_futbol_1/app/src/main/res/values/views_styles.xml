@@ -60,7 +60,14 @@
         <item name="android:background">@color/fondo_app</item>
         <item name="android:padding">12dp</item>
         <item name="android:gravity">center</item>
-\    </style><!--Spiner style-->
+    </style><!--Spiner style-->
+
+    <!--Edit text -->
+
+    <style name="editText" >
+        <item name="android:textSize">26sp</item>
+
+    </style>
 
 
     

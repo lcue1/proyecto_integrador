@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.club_futbol_1.R
@@ -20,8 +21,15 @@ class NoticiasEquipoFragment : Fragment() {
 
     private var _binding: FragmentNoticiasEquipoBinding? = null
     private val binding get() = _binding!! // Acceso seguro a binding
+    private var esAdmin:Boolean=false
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {// obtiene usuario
+            esAdmin = it.getBoolean("esAdmin")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +37,8 @@ class NoticiasEquipoFragment : Fragment() {
     ): View? {
         cargarNoticias()
         _binding = FragmentNoticiasEquipoBinding.inflate(inflater, container, false)
+
+
         return binding.root
     }
 
@@ -36,7 +46,7 @@ class NoticiasEquipoFragment : Fragment() {
 
     private fun cargarNoticias() {
         val db = FirebaseFirestore.getInstance()
-
+        Log.d("esAdmin",esAdmin.toString())
         db.collection("noticias")
             .get()
             .addOnSuccessListener { result ->
@@ -57,7 +67,19 @@ class NoticiasEquipoFragment : Fragment() {
                 }
                 Log.d("noticias",noticias.toString())
 
-                val customAdapter = NoticiasAdapter(noticias)
+                val customAdapter = NoticiasAdapter(
+                    esAdministrador = esAdmin,
+                    noticias = noticias,
+                    editarNoticia = {noticiaEditar->
+                        val bundle = Bundle().apply {
+                            putParcelable("noticiaEditar", noticiaEditar)
+                        }
+
+                        findNavController().navigate(R.id.action_noticiasEquipoFragment_to_addNoticiaFragment, bundle)
+
+
+                    }
+                )
 
                 val recyclerView: RecyclerView = binding.noticiasRecycle
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())

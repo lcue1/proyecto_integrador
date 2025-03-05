@@ -14,7 +14,11 @@
         android:id="@+id/noticiasEquipoFragment"
         android:name="com.example.club_futbol_1.ui.fragments.NoticiasEquipoFragment"
         android:label="fragment_noticias_equipo"
-        tools:layout="@layout/fragment_noticias_equipo" />
+        tools:layout="@layout/fragment_noticias_equipo" >
+        <action
+            android:id="@+id/action_noticiasEquipoFragment_to_addNoticiaFragment"
+            app:destination="@id/addNoticiaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tiendaFragment"
         android:name="com.example.club_futbol_1.ui.fragments.TiendaFragment"
@@ -37,5 +41,9 @@
         android:id="@+id/addNoticiaFragment"
         android:name="com.example.club_futbol_1.ui.fragments_admin.AddNoticiaFragment"
         android:label="fragment_add_noticia"
-        tools:layout="@layout/fragment_add_noticia" />
+        tools:layout="@layout/fragment_add_noticia" >
+        <action
+            android:id="@+id/action_addNoticiaFragment_to_noticiasEquipoFragment"
+            app:destination="@id/noticiasEquipoFragment" />
+    </fragment>
 </navigation>

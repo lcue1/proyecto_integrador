@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_noticiasEquipoFragment_to_addNoticiaFragment"
             app:destination="@id/addNoticiaFragment" />
+        <action
+            android:id="@+id/action_noticiasEquipoFragment_self"
+            app:destination="@id/noticiasEquipoFragment" />
     </fragment>
     <fragment
         android:id="@+id/tiendaFragment"

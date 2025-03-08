@@ -18,6 +18,7 @@ import com.example.club_futbol_1.databinding.FragmentCarrritoBinding
 import com.example.club_futbol_1.model.Noticia
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 
 class AddNoticiaFragment : Fragment() {
@@ -48,23 +49,59 @@ class AddNoticiaFragment : Fragment() {
             }
         }else{//edita la noticia
             //cambio el disenio del boton y el texto
+            binding.tituloAddNoticia.text = "Editar noticia: ${noticiaEditar.id}"
             binding.agregarEditarBtn.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.verde))
             binding.agregarEditarBtn.text = "Editar"
+            binding.tituloAddNoticiaET.setText(noticiaEditar.titulo)
+            binding.descripcionNoticiaET.setText(noticiaEditar.descripcion)
+            binding.urlNoticiaET.setText(noticiaEditar.urlImagen)
             binding.agregarEditarBtn.setOnClickListener {
                 val campoVacio = validarEditText(editTexts)
                 if(campoVacio==null){//todos los edit text  llenos
-                    editarNoticia()
+                    editarNoticia(noticiaEditar.id!!)
                 }
-
             }
+
         }
 
 
         return binding.root
     }
 
-    private fun editarNoticia() {
+    private fun editarNoticia(documnentId:String) {
+        val db =FirebaseFirestore.getInstance()
+        val noticiaEditada = hashMapOf(
+            "titulo" to binding.tituloAddNoticiaET.text.toString(),
+            "descripcion" to binding.descripcionNoticiaET.text.toString(),
+            "urlImg" to binding.urlNoticiaET.text.toString()
+        )
+        Log.d("noticiaactualizada",noticiaEditada.toString())
+        db.collection("noticias").document(documnentId)
+            .set(noticiaEditada, SetOptions.merge())
+            .addOnSuccessListener {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+                builder
+                    .setMessage("Noticia actualizada!")
+                    .setTitle("Editar")
+                    .setPositiveButton("ok") { dialog, which ->
+                        val navController = findNavController()
 
+                        val bundle = Bundle().apply {
+                            putBoolean("esAdmin",true)
+                        }
+                        navController.navigate(R.id.action_addNoticiaFragment_to_noticiasEquipoFragment,bundle)
+
+                    }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()//mestra el dialogo
+            }
+            .addOnFailureListener {e->//error al actualizar
+                Log.d("noticiaactualizada","error:$e")
+            }
+
+
+        db.collection("noticias").document()
 
     }
 
@@ -107,7 +144,7 @@ class AddNoticiaFragment : Fragment() {
                 builder
                     .setMessage("Se ha agregado una nueva noticia\n" +
                             "Desea agregar otra?")
-                    .setTitle("Info")
+                    .setTitle("Agregar")
                     .setPositiveButton("Si") { dialog, which ->
                         limpiarEditTexts(arrayOf(binding.tituloAddNoticiaET,binding.descripcionNoticiaET,binding.urlNoticiaET))
                     }

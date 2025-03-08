@@ -58,7 +58,7 @@
             <EditText
                 android:id="@+id/descripcionNoticiaET"
                 android:layout_width="256dp"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:background="@color/white"
                 style="@style/editText"
                 />
@@ -72,7 +72,7 @@
             <EditText
                 android:id="@+id/urlNoticiaET"
                 android:layout_width="256dp"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:background="@color/white"
                 style="@style/editText"
                 />

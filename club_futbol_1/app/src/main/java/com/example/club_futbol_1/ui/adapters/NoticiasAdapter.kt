@@ -13,7 +13,12 @@ import com.example.club_futbol_1.R
 import com.example.club_futbol_1.model.Noticia
 import com.squareup.picasso.Picasso
 
-class NoticiasAdapter(private val esAdministrador:Boolean,private val noticias: MutableList<Noticia>,private val  editarNoticia:(noticia:Noticia)->Unit) :
+class NoticiasAdapter(
+    private val esAdministrador:Boolean,private
+    val noticias: MutableList<Noticia>,
+    private val  editarNoticia:(noticia:Noticia)->Unit,
+    private val eliminarNoticia:(idNoticia:String)->Unit
+) :
     RecyclerView.Adapter<NoticiasAdapter.ViewHolder>() {
 
 
@@ -60,6 +65,8 @@ class NoticiasAdapter(private val esAdministrador:Boolean,private val noticias: 
 
             )
             viewHolder.notivias_btn.setOnClickListener { editarNoticia(noticia) }
+            viewHolder.eliminarNoticiaBtn.setOnClickListener { eliminarNoticia(noticias[position].id!!) }
+
             //eliminar
             viewHolder.eliminarNoticiaBtn.visibility=View.VISIBLE
         }

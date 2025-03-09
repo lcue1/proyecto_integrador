@@ -1,42 +1,52 @@
 package com.example.club_futbol_1.ui
 
+import android.Manifest
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
+
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
+
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+
 import androidx.core.view.GravityCompat
 import com.google.firebase.firestore.Query
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.ActivityUserBinding
-import com.example.club_futbol_1.model.Noticia
+
 import com.example.club_futbol_1.model.Usuario
-import com.example.club_futbol_1.ui.adapters.NoticiasAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
-import com.squareup.picasso.Picasso
-import kotlin.math.log
+
 import com.google.firebase.firestore.DocumentChange
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
     private lateinit var drawerLayout: DrawerLayout
     private var usuario: Usuario?=null
+
+    //notificacion atributos
+    val CHANNEL_ID ="129"
+    val NOTIFICATION_ID = 123
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +55,15 @@ class UserActivity : AppCompatActivity() {
          usuario = intent.getParcelableExtra<Usuario>("usuario")
         usuario?.let {
          //   cargarFragmento(R.id.tiendaFragment)
+            permisoYMostrarNotificacion()
             seleccionarFragmentoMenu()
             escucharNuevasNoticias()
+            createNotificationChannel()//canal notificaciones
+
         }
     }
+
+
 
     private fun escucharNuevasNoticias() {
         val db = FirebaseFirestore.getInstance()
@@ -75,39 +90,62 @@ class UserActivity : AppCompatActivity() {
                             val titulo = doc.getString("titulo") ?: "Nueva Noticia"
                             val descripcion = doc.getString("descripcion") ?: "Revisa las novedades"
                             Log.d("notificacionesNoticias", "Nueva noticia agregada: $titulo")
-                            mostrarNotificacion(titulo, descripcion)
+                            permisoYMostrarNotificacion(crearNotificacion())//lanzar notificacion
                         }
                     }
                 }
             }
     }
 
-    private fun mostrarNotificacion(titulo: String, mensaje: String) {
-        val channelId = "NoticiasChannel"
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private fun permisoYMostrarNotificacion(notificacionBuilder:NotificationCompat.Builder?=null) {
+        with(NotificationManagerCompat.from(this)) {
+            if (ActivityCompat.checkSelfPermission(
+                    this@UserActivity,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                //solicitar permiso
+                MaterialAlertDialogBuilder(this@UserActivity, com.google.android.material.R.style.MaterialAlertDialog_Material3)
+                    .setTitle("Permiso de notificacion")
+                    .setMessage("Te gustaria recibir notificaciones?")
+                    .setPositiveButton("Si") { _, _ ->
+                        val intent = Intent(ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.parse("package:$packageName")
+                        startActivity(intent)
+                    }
+                    .setNegativeButton("Cancel", null)
+                    .show()
+                return@with
+            }
 
+
+            // notificationId is a unique int for each notification that you must define.
+            if (notificacionBuilder!=null)
+                notify(NOTIFICATION_ID, notificacionBuilder.build())
+        }
+    }
+    private fun crearNotificacion(): NotificationCompat.Builder {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.degradado_main_activity)
+            .setContentTitle("My notification")
+            .setContentText("Much longer text that cannot fit one line...")
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText("Much longer text that cannot fit one line..."))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+    }
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId, "Noticias", NotificationManager.IMPORTANCE_HIGH
-            )
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system.
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-
-        val intent = Intent(this, UserActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle(titulo)
-            .setContentText(mensaje)
-            .setSmallIcon(R.drawable.degradado_main_activity) // Asegúrate de tener este ícono en res/drawable
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .build()
-
-        notificationManager.notify(0, notification)
     }
 
     private fun seleccionarFragmentoMenu() {

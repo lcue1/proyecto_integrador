@@ -22,5 +22,7 @@
 
     <!-- Add noticias -->
     <string name="titulo_agregar_noticia">Agregar noticia</string>
+    <string name="channel_name">chanel_prototipo_futbo</string>
+    <string name="channel_description">Canal para notificaciones de noticias nuevas</string>
 
 </resources>

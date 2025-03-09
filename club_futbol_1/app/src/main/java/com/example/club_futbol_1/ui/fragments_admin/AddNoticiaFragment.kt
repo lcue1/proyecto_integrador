@@ -135,7 +135,8 @@ class AddNoticiaFragment : Fragment() {
         val nuevaNoticia = hashMapOf(
             "titulo" to binding.tituloAddNoticiaET.text.toString(),
             "descripcion" to binding.descripcionNoticiaET.text.toString(),
-            "urlImg" to binding.urlNoticiaET.text.toString()
+            "urlImg" to binding.urlNoticiaET.text.toString(),
+            "fecha" to com.google.firebase.Timestamp.now()
         )
         db.collection("noticias").add(nuevaNoticia)
             .addOnSuccessListener { documentoReference->
@@ -144,7 +145,7 @@ class AddNoticiaFragment : Fragment() {
                 builder
                     .setMessage("Se ha agregado una nueva noticia\n" +
                             "Desea agregar otra?")
-                    .setTitle("Agregar")
+                    .setTitle("Registro agregado")
                     .setPositiveButton("Si") { dialog, which ->
                         limpiarEditTexts(arrayOf(binding.tituloAddNoticiaET,binding.descripcionNoticiaET,binding.urlNoticiaET))
                     }

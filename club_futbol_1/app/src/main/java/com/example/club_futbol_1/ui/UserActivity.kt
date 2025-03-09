@@ -1,5 +1,11 @@
 package com.example.club_futbol_1.ui
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -7,9 +13,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.firestore.Query
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
@@ -25,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.auth.User
 import com.squareup.picasso.Picasso
 import kotlin.math.log
+import com.google.firebase.firestore.DocumentChange
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
@@ -39,8 +46,68 @@ class UserActivity : AppCompatActivity() {
         usuario?.let {
          //   cargarFragmento(R.id.tiendaFragment)
             seleccionarFragmentoMenu()
-
+            escucharNuevasNoticias()
         }
+    }
+
+    private fun escucharNuevasNoticias() {
+        val db = FirebaseFirestore.getInstance()
+        var esPrimeraCarga = true // Bandera para ignorar el primer lote
+
+        db.collection("noticias")
+            .orderBy("fecha", Query.Direction.DESCENDING) // Ordena por fecha
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    Log.e("notificacionesNoticias", "Error al escuchar noticias", e)
+                    return@addSnapshotListener
+                }
+
+                if (snapshots != null) {
+
+                    if (esPrimeraCarga) {//ignora la primera carga de datos
+                        esPrimeraCarga = false
+                        return@addSnapshotListener
+                    }
+
+                    for (change in snapshots.documentChanges) {
+                        if (change.type == DocumentChange.Type.ADDED) { // Solo documentos nuevos
+                            val doc = change.document
+                            val titulo = doc.getString("titulo") ?: "Nueva Noticia"
+                            val descripcion = doc.getString("descripcion") ?: "Revisa las novedades"
+                            Log.d("notificacionesNoticias", "Nueva noticia agregada: $titulo")
+                            mostrarNotificacion(titulo, descripcion)
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun mostrarNotificacion(titulo: String, mensaje: String) {
+        val channelId = "NoticiasChannel"
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId, "Noticias", NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val intent = Intent(this, UserActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setContentTitle(titulo)
+            .setContentText(mensaje)
+            .setSmallIcon(R.drawable.degradado_main_activity) // Asegúrate de tener este ícono en res/drawable
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+
+        notificationManager.notify(0, notification)
     }
 
     private fun seleccionarFragmentoMenu() {

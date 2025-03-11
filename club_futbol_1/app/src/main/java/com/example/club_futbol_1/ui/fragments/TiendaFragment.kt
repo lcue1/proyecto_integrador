@@ -1,11 +1,14 @@
 package com.example.club_futbol_1.ui.fragments
 
+import android.app.AlertDialog
+import android.media.audiofx.DynamicsProcessing.BandBase
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,11 +40,25 @@ class TiendaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        cargarProductos()
+
+        var esAdmin=false
+        arguments?.let {
+            esAdmin=it.getBoolean("esAdmin")
+        }
 
         _binding = FragmentTiendaBinding.inflate(inflater, container, false)
 
-        binding.btnItemsCarrito.setOnClickListener { abrirFragmentCarrito() }//boton citems agregados al carrito
+        if (esAdmin){
+            cargarProductos(true)
+            binding.agregarProductoBtn.visibility=View.VISIBLE
+            binding.agregarProductoBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_tiendaFragment_to_agregarEditarProductoFragment,)
+            }
+        }else{
+            binding.btnItemsCarrito.setOnClickListener { abrirFragmentCarrito() }//boton citems agregados al carrito
+            cargarProductos(false)
+
+        }
 
         return binding.root
     }
@@ -55,7 +72,7 @@ class TiendaFragment : Fragment() {
     }
 
 
-    private fun cargarProductos() {
+    private fun cargarProductos(esAdmin:Boolean) {
         val db = FirebaseFirestore.getInstance()
 
         db.collection("tienda")
@@ -76,9 +93,32 @@ class TiendaFragment : Fragment() {
                 }
 
                 val customAdapter = TiendaAdapter(//creo adapter
+                    esAdmin = esAdmin,
                     productos = productos,//envio productos para que se muestren en el tienda item
                     agregarAlCarrito = {// agrega o elimina la lista del carrito
-                        productoSeleccionado->  agregarEliminarCarrito(productoSeleccionado)   }
+                        productoSeleccionado->  agregarEliminarCarrito(productoSeleccionado)   },
+                    editarProducto = {producto->
+                        val bandle =Bundle().apply {
+                            putParcelable("productoEditar",producto)
+                        }
+                        findNavController().navigate(R.id.action_tiendaFragment_to_agregarEditarProductoFragment,bandle)
+
+                    },
+                    eliminarProducto = {idProducto->
+                        val builder = AlertDialog.Builder(context)
+                        builder.setMessage("Eliminar producto?\n" +
+                                "id: $idProducto")
+                            .setTitle("Eliminar")
+                            .setPositiveButton("Si"){dialog,with->
+                                eliminarProducto(idProducto)
+
+                            }
+                            .setNegativeButton("No",null)
+
+                            val dialog = builder.create()
+                            dialog.show()
+
+                    }
                 )
                 //vinculacion del adapter con el recyclerview
                 val recyclerView: RecyclerView = binding.noticiasRecycle
@@ -90,6 +130,24 @@ class TiendaFragment : Fragment() {
                 Log.w("Firestore", "Error al obtener documentos.", exception)
             }
     }
+
+    private fun eliminarProducto(idProducto: String) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("tienda")
+            .document(idProducto)
+            .delete()
+            .addOnSuccessListener {
+                val bundle = Bundle().apply {
+                    putBoolean("esAdmin", true)
+                }
+                findNavController().navigate(R.id.tiendaFragment, bundle)
+                Toast.makeText(context,"Producto eliminado.",Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e->
+                Log.e("eliminiarProducto",e.toString())
+            }
+    }
+
     private fun agregarEliminarCarrito(productoSeleccionado:Producto){
         val  existeItemCarrito = productosSeleccionados.find { it->it.id_document==productoSeleccionado.id_document }
         if(existeItemCarrito==null){//agrega una sola vez

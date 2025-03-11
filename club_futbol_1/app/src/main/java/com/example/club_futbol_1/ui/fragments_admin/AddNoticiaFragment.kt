@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.club_futbol_1.R
+import com.example.club_futbol_1.Utils
 import com.example.club_futbol_1.databinding.FragmentAddNoticiaBinding
 import com.example.club_futbol_1.databinding.FragmentCarrritoBinding
 import com.example.club_futbol_1.model.Noticia
@@ -41,11 +43,10 @@ class AddNoticiaFragment : Fragment() {
         listenersEditEtexts(editTexts)
         if(noticiaEditar==null) {//Agrega la noticia
             binding.agregarEditarBtn.setOnClickListener {
-                val campoVacio = validarEditText(editTexts)
+                val campoVacio = Utils.validarEditText(editTexts)
                 if(campoVacio==null){//todos los edit text  llenos
                     agregarNoticia()
                 }
-
             }
         }else{//edita la noticia
             //cambio el disenio del boton y el texto
@@ -56,7 +57,7 @@ class AddNoticiaFragment : Fragment() {
             binding.descripcionNoticiaET.setText(noticiaEditar.descripcion)
             binding.urlNoticiaET.setText(noticiaEditar.urlImagen)
             binding.agregarEditarBtn.setOnClickListener {
-                val campoVacio = validarEditText(editTexts)
+                val campoVacio = Utils.validarEditText(editTexts)
                 if(campoVacio==null){//todos los edit text  llenos
                     editarNoticia(noticiaEditar.id!!)
                 }
@@ -79,22 +80,12 @@ class AddNoticiaFragment : Fragment() {
         db.collection("noticias").document(documnentId)
             .set(noticiaEditada, SetOptions.merge())
             .addOnSuccessListener {
-                val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-                builder
-                    .setMessage("Noticia actualizada!")
-                    .setTitle("Editar")
-                    .setPositiveButton("ok") { dialog, which ->
-                        val navController = findNavController()
+                Toast.makeText(context, "Noticias actualizada.",Toast.LENGTH_SHORT).show()
+                val bundle = Bundle().apply {
+                    putBoolean("esAdmin",true)
+                }
+                findNavController().navigate(R.id.noticiasEquipoFragment)
 
-                        val bundle = Bundle().apply {
-                            putBoolean("esAdmin",true)
-                        }
-                        navController.navigate(R.id.action_addNoticiaFragment_to_noticiasEquipoFragment,bundle)
-
-                    }
-
-                val dialog: AlertDialog = builder.create()
-                dialog.show()//mestra el dialogo
             }
             .addOnFailureListener {e->//error al actualizar
                 Log.d("noticiaactualizada","error:$e")
@@ -118,16 +109,6 @@ class AddNoticiaFragment : Fragment() {
     }
 
 
-    private fun validarEditText(editTexts: Array<EditText>):EditText? {//retorna null si todos los campos estan llenos
-            return editTexts.find { et->
-                val editTextVacio=et.text.toString().isEmpty()
-                if (editTextVacio){
-                    et.setError("Campo obligatorio")///indica al usuario que un campo esta vacio
-                }
-                editTextVacio
-            }//retorna null  o un edittext
-    }
-
 
     private fun agregarNoticia() {
 
@@ -140,7 +121,7 @@ class AddNoticiaFragment : Fragment() {
         )
         db.collection("noticias").add(nuevaNoticia)
             .addOnSuccessListener { documentoReference->
-
+                Toast.makeText(context, "Noticias agregada.", Toast.LENGTH_SHORT).show()
                 val builder: AlertDialog.Builder = AlertDialog.Builder(context)
                 builder
                     .setMessage("Se ha agregado una nueva noticia\n" +
@@ -151,8 +132,11 @@ class AddNoticiaFragment : Fragment() {
                     }
                     .setNegativeButton("No") { dialog, which ->
                         // navega a las noticias
-                        val navController = findNavController()
-                        navController.navigate(R.id.action_addNoticiaFragment_to_noticiasEquipoFragment)                    }
+                        val bundle =Bundle().apply {
+                            putBoolean("esAdmin",true)
+                        }
+                        findNavController().navigate(R.id.noticiasEquipoFragment)
+                    }
 
                 val dialog: AlertDialog = builder.create()
                 dialog.show()//mestra el dialogo

@@ -1,41 +1,32 @@
 package com.example.club_futbol_1.ui
 
 import android.Manifest
-import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-
 import androidx.core.view.GravityCompat
 import com.google.firebase.firestore.Query
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-
 import com.example.club_futbol_1.R
 import com.example.club_futbol_1.databinding.ActivityUserBinding
-
 import com.example.club_futbol_1.model.Usuario
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-
 import com.google.firebase.firestore.DocumentChange
 
 class UserActivity : AppCompatActivity() {
@@ -59,7 +50,6 @@ class UserActivity : AppCompatActivity() {
             seleccionarFragmentoMenu()
             escucharNuevasNoticias()
             createNotificationChannel()//canal notificaciones
-
         }
     }
 
@@ -193,6 +183,13 @@ class UserActivity : AppCompatActivity() {
                         putBoolean("esAdmin",true)
                     }
                     cargarFragmento(R.id.noticiasEquipoFragment,bundle)
+                }
+                R.id.administrarTienda -> {
+                    val bundle = Bundle().apply {
+                        putParcelable("usuario", usuario)
+                        putBoolean("esAdmin",true)
+                    }
+                    cargarFragmento(R.id.tiendaFragment, bundle)
                 }
 
             }

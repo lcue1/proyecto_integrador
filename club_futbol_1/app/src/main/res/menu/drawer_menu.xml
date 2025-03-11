@@ -36,4 +36,9 @@
         android:icon="@drawable/ic_administrador"
         android:title="Modificar noticia"
         />
+    <item
+        android:id="@+id/administrarTienda"
+        android:icon="@drawable/ic_administrador"
+        android:title="Administrar tienda"
+        />
 </menu>

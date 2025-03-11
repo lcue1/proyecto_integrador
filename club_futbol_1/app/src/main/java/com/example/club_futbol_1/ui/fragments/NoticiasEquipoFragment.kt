@@ -115,7 +115,7 @@ class NoticiasEquipoFragment : Fragment() {
                     putBoolean("esAdmin",true)
                 }
 
-                findNavController().navigate(R.id.action_noticiasEquipoFragment_self, bundle)
+                findNavController().navigate(R.id.noticiasEquipoFragment, bundle)
 
             }
             .addOnFailureListener { e->

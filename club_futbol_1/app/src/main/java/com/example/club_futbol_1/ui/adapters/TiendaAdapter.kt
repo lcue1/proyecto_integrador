@@ -1,8 +1,10 @@
 package com.example.club_futbol_1.ui.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,7 +15,15 @@ import com.example.club_futbol_1.model.Producto
 import com.squareup.picasso.Picasso
 
 
-class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCarrito:(producto:Producto)->Unit) :
+class TiendaAdapter(
+    private  val esAdmin:Boolean=false,
+    private val productos:
+    MutableList<Producto>,
+    val agregarAlCarrito:(producto:Producto)->Unit,
+    val editarProducto:(producto:Producto)->Unit,
+    val eliminarProducto:(idProducto:String)->Unit
+
+) :
     RecyclerView.Adapter<TiendaAdapter.ViewHolder>() {
         private var cambiarIcono=false
 
@@ -25,6 +35,8 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
         val imagen_producto: ImageView
         var url_img_producto: String
         val btn_carrito: ImageButton
+        val btnEliminarProducto: Button
+        val btnEditarProducto: Button
         var seleccionado:Boolean
 
         init {
@@ -36,7 +48,10 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
             imagen_producto = view.findViewById(R.id.imagen_producto)
             url_img_producto=""
             btn_carrito = view.findViewById(R.id.btn_carrito)
+            btnEliminarProducto = view.findViewById(R.id.btnEliminarProducto)
+            btnEditarProducto = view.findViewById(R.id.btnEditarProducto)
             seleccionado=false
+
         }
     }
 
@@ -54,6 +69,19 @@ class TiendaAdapter(private val productos: MutableList<Producto>,val agregarAlCa
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+
+        if (esAdmin){
+            viewHolder.btnEliminarProducto.visibility=View.VISIBLE
+            viewHolder.btnEditarProducto.visibility=View.VISIBLE
+            viewHolder.btn_carrito.visibility=View.GONE
+            viewHolder.btnEliminarProducto.setOnClickListener {
+                eliminarProducto(productos[position].id_document)
+            }
+            viewHolder.btnEditarProducto.setOnClickListener {
+                editarProducto(productos[position])
+            }
+        }
+
         viewHolder.id_producto=productos[position].id_document
         viewHolder.precio.text = productos[position].precio_producto.toString()+"$"
         viewHolder.nombre_producto.text = productos[position].nombre_producto

@@ -11,6 +11,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -28,6 +30,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.DocumentChange
+import com.squareup.picasso.Picasso
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
@@ -143,6 +146,17 @@ class UserActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+
+        //establecer imagen de usuario
+
+        val headerView = navigationView.getHeaderView(0) // Obtiene la vista del header
+        val imageView = headerView.findViewById<ImageView>(R.id.imageViewHeader)
+        Picasso.get()
+            .load(usuario!!.urlImagen)
+            .into(imageView)
+        headerView.findViewById<TextView>(R.id.tvUsername).text=usuario!!.nombre
+
+
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

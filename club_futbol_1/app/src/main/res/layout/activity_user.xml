@@ -55,6 +55,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
+        app:headerLayout="@layout/nav_header"
         android:background="@drawable/degradado_main_activity"
         style="@style/NavigationViewStyle"
         />

@@ -37,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/btn_productos_carrito"
-            android:visibility="gone"
+            android:visibility="visible"
             />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/noticiasRecycle"

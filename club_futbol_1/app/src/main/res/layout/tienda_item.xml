@@ -4,7 +4,7 @@
     android:layout_height="256dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="32dp"
-    android:layout_margin="16dp"
+    android:layout_margin="32dp"
     app:cardBackgroundColor="@color/white"
     android:id="@+id/cardViewItemProducto"
     >

@@ -7,14 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.UserActivity"
-
+    android:background="@drawable/degradado_main_activity"
     >
 
     <!-- Contenedor principal -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
+
         >
 
 

@@ -31,11 +31,11 @@
 <!-- Tienda fragment -->
     <style name="btn_productos_carrito" parent="normalText">
         <item name="android:textSize">@dimen/titulo</item>
-        <item name="backgroundTint">@color/fondo_app</item>
+        <item name="backgroundTint">@color/verde</item>
     </style>
     <!-- Item tienda cardview-->
     <style name="precio_producto" parent="normalText">
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">24dp</item>
         <item name="android:textStyle">bold|italic</item>
         <item name="android:fontFamily">casual </item>
         <item name="android:background">#000000</item>

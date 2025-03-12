@@ -60,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="32dp"
             android:layout_marginEnd="32dp"
-            android:visibility="visible"
+            android:visibility="gone"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

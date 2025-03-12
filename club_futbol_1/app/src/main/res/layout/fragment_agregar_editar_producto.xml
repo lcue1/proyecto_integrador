@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="Nombre"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="32dp"
             />
         <EditText
             android:id="@+id/aEProductoDescripcionET"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="Descripcion"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="32dp"
             />
         <EditText
             android:id="@+id/aEProductoPrecioET"
@@ -44,7 +44,7 @@
             android:background="@color/white"
             android:hint="Precio"
             android:inputType="numberDecimal"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="32dp"
             />
         <EditText
             android:id="@+id/aEProductoURLimgET"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:hint="URL imagen"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="32dp"
             />
 
         <Button

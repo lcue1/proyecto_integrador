@@ -56,13 +56,13 @@
                 android:layout_marginTop="48dp"
                 style="@style/subtitulo"
                 />
+
             <EditText
                 android:id="@+id/descripcionNoticiaET"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:background="@color/white"
                 style="@style/editText"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:background="@color/white" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,13 +70,13 @@
                 android:layout_marginTop="48dp"
                 style="@style/titulo"
                 />
+
             <EditText
                 android:id="@+id/urlNoticiaET"
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:background="@color/white"
                 style="@style/editText"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="128dp"
+                android:background="@color/white" />
 
             <Button
                 android:id="@+id/agregarEditarBtn"

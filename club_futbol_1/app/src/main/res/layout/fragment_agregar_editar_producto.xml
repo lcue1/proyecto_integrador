@@ -29,14 +29,14 @@
             android:hint="Nombre"
             android:layout_marginBottom="32dp"
             />
+
         <EditText
             android:id="@+id/aEProductoDescripcionET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="Descripcion"
+            android:layout_height="128dp"
             android:layout_marginBottom="32dp"
-            />
+            android:background="@color/white"
+            android:hint="Descripcion" />
         <EditText
             android:id="@+id/aEProductoPrecioET"
             android:layout_width="match_parent"
@@ -46,14 +46,14 @@
             android:inputType="numberDecimal"
             android:layout_marginBottom="32dp"
             />
+
         <EditText
             android:id="@+id/aEProductoURLimgET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="URL imagen"
+            android:layout_height="128dp"
             android:layout_marginBottom="32dp"
-            />
+            android:background="@color/white"
+            android:hint="URL imagen" />
 
         <Button
             android:id="@+id/agregarEditarProductoBtn"

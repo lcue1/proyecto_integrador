@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
-class   MainActivity : AppCompatActivity() {
+class       MainActivity : AppCompatActivity() {
     //atributos
     private lateinit var binding:ActivityMainBinding
     private lateinit var auth: FirebaseAuth
